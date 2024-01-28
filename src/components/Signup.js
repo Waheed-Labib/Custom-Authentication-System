@@ -1,24 +1,47 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import SubmitButton from './common/SubmitButton';
 import FormControl from './common/FormControl';
+import { ErrorAlert } from './common/ErrorAlert';
 
 const Signup = () => {
-    let nameFieldRef = useRef(null);
-    let emailFieldRef = useRef(null);
-    let passwordFieldRef = useRef(null);
-    let confirmPasswordFieldRef = useRef(null);
+    const nameFieldRef = useRef(null);
+    const emailFieldRef = useRef(null);
+    const passwordFieldRef = useRef(null);
+    const confirmPasswordFieldRef = useRef(null);
+
+    const [error, setError] = useState('');
 
     const handleSignup = e => {
         e.preventDefault();
-        console.log(nameFieldRef.current.value)
-        console.log(emailFieldRef.current.value)
-        console.log(passwordFieldRef.current.value)
-        console.log(confirmPasswordFieldRef.current.value)
 
-        nameFieldRef.current.value = '';
-        emailFieldRef.current.value = '';
-        passwordFieldRef.current.value = '';
-        confirmPasswordFieldRef.current.value = '';
+        // if passwords don't match, show alert & return
+        if (passwordFieldRef.current.value !== confirmPasswordFieldRef.current.value) {
+            setError('Your passwords did not match.')
+            passwordFieldRef.current.value = '';
+            confirmPasswordFieldRef.current.value = '';
+            return
+        }
+
+        const user = {
+            name: nameFieldRef.current.value,
+            email: emailFieldRef.current.value,
+            password: passwordFieldRef.current.value,
+        }
+
+        fetch('http://localhost:5000/users', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(user)
+        })
+            .then(res => res.json())
+            .then(data => console.log(data))
+
+        // nameFieldRef.current.value = '';
+        // emailFieldRef.current.value = '';
+        // passwordFieldRef.current.value = '';
+        // confirmPasswordFieldRef.current.value = '';
     }
 
     return (
@@ -41,6 +64,7 @@ const Signup = () => {
                         <SubmitButton buttonText={'Signup'}></SubmitButton>
                     </form>
                 </div>
+                <ErrorAlert error={error} setError={setError}></ErrorAlert>
             </div>
         </div>
     );
