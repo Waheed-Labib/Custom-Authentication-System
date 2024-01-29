@@ -36,7 +36,15 @@ const Signup = () => {
             body: JSON.stringify(user)
         })
             .then(res => res.json())
-            .then(data => console.log(data))
+            .then(data => {
+                if (data.acknowledged) {
+                    console.log(data)
+                }
+                else setError(data.message)
+            })
+            .catch(err => {
+                setError('Something Went Wrong.')
+            })
 
         // nameFieldRef.current.value = '';
         // emailFieldRef.current.value = '';
