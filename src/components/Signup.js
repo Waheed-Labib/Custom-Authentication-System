@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import SubmitButton from './common/SubmitButton';
 import FormControl from './common/FormControl';
 import { ErrorAlert } from './common/ErrorAlert';
+import SuccessAlert from './common/SuccessAlert';
 
 const Signup = () => {
     const nameFieldRef = useRef(null);
@@ -10,9 +11,14 @@ const Signup = () => {
     const confirmPasswordFieldRef = useRef(null);
 
     const [error, setError] = useState('');
+    const [success, setSuccess] = useState('');
+    const [loading, setLoading] = useState(false);
 
     const handleSignup = e => {
         e.preventDefault();
+        setError('');
+        setSuccess('');
+        setLoading(true);
 
         // if passwords don't match, show alert & return
         if (passwordFieldRef.current.value !== confirmPasswordFieldRef.current.value) {
@@ -38,18 +44,30 @@ const Signup = () => {
             .then(res => res.json())
             .then(data => {
                 if (data.acknowledged) {
-                    console.log(data)
+                    setSuccess('User Created Successfully.')
                 }
-                else setError(data.message)
+                else if (data.message) {
+                    setError(data.message)
+                }
+                else {
+                    setError('Something Went Wrong.')
+                }
+                nameFieldRef.current.value = '';
+                emailFieldRef.current.value = '';
+                passwordFieldRef.current.value = '';
+                confirmPasswordFieldRef.current.value = '';
+                setLoading(false)
             })
             .catch(err => {
-                setError('Something Went Wrong.')
+                console.error(err.message, 'error')
+                nameFieldRef.current.value = '';
+                emailFieldRef.current.value = '';
+                passwordFieldRef.current.value = '';
+                confirmPasswordFieldRef.current.value = '';
+                setLoading(false)
             })
 
-        // nameFieldRef.current.value = '';
-        // emailFieldRef.current.value = '';
-        // passwordFieldRef.current.value = '';
-        // confirmPasswordFieldRef.current.value = '';
+
     }
 
     return (
@@ -69,9 +87,10 @@ const Signup = () => {
                         {/* confirm password field */}
                         <FormControl label='Confirm Password' type='password' ref={confirmPasswordFieldRef}></FormControl>
                         {/* submit button */}
-                        <SubmitButton buttonText={'Signup'}></SubmitButton>
+                        <SubmitButton buttonText={'Signup'} loading={loading}></SubmitButton>
                     </form>
                 </div>
+                <SuccessAlert success={success} setSuccess={setSuccess}></SuccessAlert>
                 <ErrorAlert error={error} setError={setError}></ErrorAlert>
             </div>
         </div>
