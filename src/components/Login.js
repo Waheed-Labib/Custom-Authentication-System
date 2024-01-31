@@ -1,20 +1,59 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import SubmitButton from './common/SubmitButton';
 import FormControl from './common/FormControl';
+import SuccessAlert from './common/SuccessAlert';
+import ErrorAlert from './common/ErrorAlert';
 
 const Login = () => {
     let emailFieldRef = useRef(null);
     let passwordFieldRef = useRef(null);
 
+    const [error, setError] = useState('');
+    const [success, setSuccess] = useState('');
+    const [loading, setLoading] = useState(false);
+
     const handleLogin = e => {
         e.preventDefault();
 
-        console.log(emailFieldRef.current.value)
-        console.log(passwordFieldRef.current.value)
+        setError('');
+        setSuccess('');
+        setLoading(true);
 
-        emailFieldRef.current.value = '';
-        passwordFieldRef.current.value = '';
+        const user = {
+            email: emailFieldRef.current.value,
+            password: passwordFieldRef.current.value,
+        }
 
+        fetch('http://localhost:5000/users/login', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(user)
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.user) {
+                    setSuccess(`Hey ${data.user.name}, Welcome Back !`)
+                    console.log(data.user)
+                }
+                else if (data.error) {
+                    setError(data.error)
+                }
+                else {
+                    setError('Something Went Wrong.')
+                }
+
+            })
+            .catch(err => {
+                setError(err.message)
+            })
+            .finally(() => {
+                emailFieldRef.current.value = '';
+                passwordFieldRef.current.value = '';
+
+                setLoading(false)
+            })
     }
 
     return (
@@ -30,9 +69,11 @@ const Login = () => {
                         {/* password field */}
                         <FormControl label='Password' type='password' ref={passwordFieldRef}></FormControl>
                         {/* submit button */}
-                        <SubmitButton buttonText={'Login'}></SubmitButton>
+                        <SubmitButton buttonText={'Login'} loading={loading}></SubmitButton>
                     </form>
                 </div>
+                <SuccessAlert success={success} setSuccess={setSuccess}></SuccessAlert>
+                <ErrorAlert error={error} setError={setError}></ErrorAlert>
             </div>
         </div>
     );

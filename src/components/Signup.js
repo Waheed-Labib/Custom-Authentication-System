@@ -34,7 +34,7 @@ const Signup = () => {
             password: passwordFieldRef.current.value,
         }
 
-        fetch('http://localhost:5000/users', {
+        fetch('http://localhost:5000/users/signup', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'
@@ -46,20 +46,17 @@ const Signup = () => {
                 if (data.acknowledged) {
                     setSuccess('User Created Successfully.')
                 }
-                else if (data.message) {
-                    setError(data.message)
+                else if (data.error) {
+                    setError(data.error)
                 }
                 else {
                     setError('Something Went Wrong.')
                 }
-                nameFieldRef.current.value = '';
-                emailFieldRef.current.value = '';
-                passwordFieldRef.current.value = '';
-                confirmPasswordFieldRef.current.value = '';
-                setLoading(false)
             })
             .catch(err => {
                 console.error(err.message, 'error')
+            })
+            .finally(() => {
                 nameFieldRef.current.value = '';
                 emailFieldRef.current.value = '';
                 passwordFieldRef.current.value = '';
