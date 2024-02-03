@@ -4,6 +4,7 @@ import FormControl from 'common-components/FormControl';
 import SuccessAlert from 'common-components/SuccessAlert';
 import ErrorAlert from 'common-components/ErrorAlert';
 import { AuthContext } from 'context/AuthProvider';
+import getUserToken from 'utilities/getUserToken';
 
 const Login = () => {
 
@@ -38,8 +39,17 @@ const Login = () => {
             .then(res => res.json())
             .then(data => {
                 if (data.user) {
-                    setSuccess(`Hey ${data.user.name}, Welcome Back !`)
-                    setUser(data.user)
+                    const { name, email } = data.user;
+
+                    getUserToken(email)
+                        .then(res => res.json())
+                        .then(data => {
+                            console.log(data, 'login')
+                            const token = data.accessToken;;
+                            localStorage.setItem('custom-auth-token', token)
+                            setSuccess(`Hey ${name}, Welcome Back !`)
+                            setUser(data.user)
+                        })
                 }
                 else if (data.error) {
                     setError(data.error)
@@ -47,8 +57,8 @@ const Login = () => {
                 else {
                     setError('Something Went Wrong.')
                 }
-
             })
+
             .catch(err => {
                 setError(err.message)
             })
