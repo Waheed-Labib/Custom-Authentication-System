@@ -2,14 +2,14 @@ import React from 'react';
 import Login from './Login';
 import Signup from './Signup';
 
-const Authentication = ({ isAlreadyMember }) => {
+const Authentication = ({ isAlreadyUser, setIsAlreadyUser }) => {
     return (
         <div>
             {
-                isAlreadyMember ?
-                    <Login></Login>
+                isAlreadyUser ?
+                    <Login setIsAlreadyUser={setIsAlreadyUser}></Login>
                     :
-                    <Signup></Signup>
+                    <Signup setIsAlreadyUser={setIsAlreadyUser}></Signup>
             }
         </div>
     );

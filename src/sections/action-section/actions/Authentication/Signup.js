@@ -4,7 +4,7 @@ import FormControl from '../../../../common-components/FormControl';
 import { ErrorAlert } from '../../../../common-components/ErrorAlert';
 import SuccessAlert from '../../../../common-components/SuccessAlert';
 
-const Signup = () => {
+const Signup = ({ setIsAlreadyUser }) => {
     const nameFieldRef = useRef(null);
     const emailFieldRef = useRef(null);
     const passwordFieldRef = useRef(null);
@@ -68,10 +68,10 @@ const Signup = () => {
     }
 
     return (
-        <div className="hero min-h-screen bg-base-200">
-            <div className="hero-content flex-col">
+        <div className="hero md:min-h-screen bg-base-200">
+            <div className="hero-content flex-col w-full">
                 <div className="text-center lg:text-left">
-                    <h1 className="text-5xl font-bold">Signup</h1>
+                    <h1 className="text-3xl font-bold my-3">Signup</h1>
                 </div>
                 <div className="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
                     <form onSubmit={handleSignup} className="card-body">
@@ -87,6 +87,7 @@ const Signup = () => {
                         <SubmitButton buttonText={'Signup'} loading={loading}></SubmitButton>
                     </form>
                 </div>
+                <p>Already have an account? <span onClick={() => setIsAlreadyUser(true)} className='text-primary underline hover:cursor-pointer'>Login</span></p>
                 <SuccessAlert success={success} setSuccess={setSuccess}></SuccessAlert>
                 <ErrorAlert error={error} setError={setError}></ErrorAlert>
             </div>

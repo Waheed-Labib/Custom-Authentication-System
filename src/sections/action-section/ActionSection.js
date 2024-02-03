@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
-import Signup from './actions/Authentication/Signup';
-import Login from './actions/Authentication/Login';
 import LogOut from './actions/LogOut';
 import Authentication from './actions/Authentication/Authentication';
 
 const ActionSection = ({ isLoggedIn, setIsLoggedIn }) => {
 
-    const [isAlreadyUser, setIsAlreadyUser] = useState(true)
+    const [isAlreadyUser, setIsAlreadyUser] = useState(false)
 
     return (
         <div>
@@ -14,7 +12,7 @@ const ActionSection = ({ isLoggedIn, setIsLoggedIn }) => {
                 isLoggedIn ?
                     <LogOut></LogOut>
                     :
-                    <Authentication></Authentication>
+                    <Authentication isAlreadyUser={isAlreadyUser} setIsAlreadyUser={setIsAlreadyUser}></Authentication>
             }
         </div>
     );
