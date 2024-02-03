@@ -5,13 +5,13 @@ import { AuthContext } from '../../context/AuthProvider';
 
 const ActionSection = () => {
 
-    const { user } = useContext(AuthContext);
+    const { user, setUser } = useContext(AuthContext);
 
     return (
         <div>
             {
                 user ?
-                    <LogOut></LogOut>
+                    <LogOut setUser={setUser}></LogOut>
                     :
                     <Authentication></Authentication>
             }
