@@ -1,9 +1,9 @@
 import React, { useContext, useRef, useState } from 'react';
-import SubmitButton from '../../../../common-components/SubmitButton';
-import FormControl from '../../../../common-components/FormControl';
-import SuccessAlert from '../../../../common-components/SuccessAlert';
-import ErrorAlert from '../../../../common-components/ErrorAlert';
-import { AuthContext } from '../../../../context/AuthProvider';
+import SubmitButton from 'common-components/SubmitButton';
+import FormControl from 'common-components/FormControl';
+import SuccessAlert from 'common-components/SuccessAlert';
+import ErrorAlert from 'common-components/ErrorAlert';
+import { AuthContext } from 'context/AuthProvider';
 
 const Login = () => {
 
