@@ -1,8 +1,8 @@
 import React, { useRef, useState } from 'react';
-import SubmitButton from './common/SubmitButton';
-import FormControl from './common/FormControl';
-import { ErrorAlert } from './common/ErrorAlert';
-import SuccessAlert from './common/SuccessAlert';
+import SubmitButton from '../../../../common-components/SubmitButton';
+import FormControl from '../../../../common-components/FormControl';
+import { ErrorAlert } from '../../../../common-components/ErrorAlert';
+import SuccessAlert from '../../../../common-components/SuccessAlert';
 
 const Signup = () => {
     const nameFieldRef = useRef(null);
