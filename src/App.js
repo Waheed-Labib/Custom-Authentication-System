@@ -1,20 +1,17 @@
-import { useState } from 'react';
 import './App.css';
 import WelcomeSection from './sections/welcome-section/WelcomeSection';
 import ActionSection from './sections/action-section/ActionSection';
 
 function App() {
 
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
-
   return (
     <div className="flex flex-col md:flex-row items-center justify-between">
-      <div className='w-full md:w-1/2 min-h-[50vh] flex items-center justify-center'>
-        <WelcomeSection isLoggedIn={isLoggedIn}></WelcomeSection>
+      <div className='w-full md:w-1/2 min-h-[50vh]'>
+        <WelcomeSection></WelcomeSection>
       </div>
 
       <div className='w-full md:w-1/2'>
-        <ActionSection isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}></ActionSection>
+        <ActionSection></ActionSection>
       </div>
     </div>
   );

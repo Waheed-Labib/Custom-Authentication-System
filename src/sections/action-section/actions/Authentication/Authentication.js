@@ -1,15 +1,19 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Login from './Login';
 import Signup from './Signup';
+import { AuthContext } from '../../../../context/AuthProvider';
 
-const Authentication = ({ isAlreadyUser, setIsAlreadyUser }) => {
+const Authentication = () => {
+
+    const { isAlreadyUser } = useContext(AuthContext)
+
     return (
         <div>
             {
                 isAlreadyUser ?
-                    <Login setIsAlreadyUser={setIsAlreadyUser}></Login>
+                    <Login></Login>
                     :
-                    <Signup setIsAlreadyUser={setIsAlreadyUser}></Signup>
+                    <Signup></Signup>
             }
         </div>
     );

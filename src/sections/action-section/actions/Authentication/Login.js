@@ -1,10 +1,14 @@
-import React, { useRef, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import SubmitButton from '../../../../common-components/SubmitButton';
 import FormControl from '../../../../common-components/FormControl';
 import SuccessAlert from '../../../../common-components/SuccessAlert';
 import ErrorAlert from '../../../../common-components/ErrorAlert';
+import { AuthContext } from '../../../../context/AuthProvider';
 
-const Login = ({ setIsAlreadyUser }) => {
+const Login = () => {
+
+    const { setIsAlreadyUser } = useContext(AuthContext)
+
     let emailFieldRef = useRef(null);
     let passwordFieldRef = useRef(null);
 

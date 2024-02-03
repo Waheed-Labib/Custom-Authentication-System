@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import LogOut from './actions/LogOut';
 import Authentication from './actions/Authentication/Authentication';
+import { AuthContext } from '../../context/AuthProvider';
 
-const ActionSection = ({ isLoggedIn, setIsLoggedIn }) => {
+const ActionSection = () => {
 
-    const [isAlreadyUser, setIsAlreadyUser] = useState(false)
+    const { isLoggedIn } = useContext(AuthContext);
 
     return (
         <div>
@@ -12,7 +13,7 @@ const ActionSection = ({ isLoggedIn, setIsLoggedIn }) => {
                 isLoggedIn ?
                     <LogOut></LogOut>
                     :
-                    <Authentication isAlreadyUser={isAlreadyUser} setIsAlreadyUser={setIsAlreadyUser}></Authentication>
+                    <Authentication></Authentication>
             }
         </div>
     );
