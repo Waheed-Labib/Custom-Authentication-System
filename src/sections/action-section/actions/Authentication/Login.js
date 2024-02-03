@@ -7,7 +7,7 @@ import { AuthContext } from '../../../../context/AuthProvider';
 
 const Login = () => {
 
-    const { setIsAlreadyUser } = useContext(AuthContext)
+    const { setIsAlreadyUser, setUser } = useContext(AuthContext)
 
     let emailFieldRef = useRef(null);
     let passwordFieldRef = useRef(null);
@@ -39,7 +39,7 @@ const Login = () => {
             .then(data => {
                 if (data.user) {
                     setSuccess(`Hey ${data.user.name}, Welcome Back !`)
-                    console.log(data.user)
+                    setUser(data.user)
                 }
                 else if (data.error) {
                     setError(data.error)

@@ -7,7 +7,7 @@ import { AuthContext } from '../../../../context/AuthProvider';
 
 const Signup = () => {
 
-    const { setIsAlreadyUser } = useContext(AuthContext)
+    const { setIsAlreadyUser, setUser } = useContext(AuthContext)
 
     const nameFieldRef = useRef(null);
     const emailFieldRef = useRef(null);
@@ -48,6 +48,7 @@ const Signup = () => {
             .then(res => res.json())
             .then(data => {
                 if (data.acknowledged) {
+                    setUser(user)
                     setSuccess('User Created Successfully.')
                 }
                 else if (data.error) {

@@ -4,14 +4,14 @@ export const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
 
-    const [isLoggedIn, setIsLoggedIn] = useState(false)
     const [isAlreadyUser, setIsAlreadyUser] = useState(false)
+    const [user, setUser] = useState(null)
 
     const authInfo = {
-        isLoggedIn,
-        setIsLoggedIn,
         isAlreadyUser,
-        setIsAlreadyUser
+        setIsAlreadyUser,
+        user,
+        setUser
     }
 
     return (
