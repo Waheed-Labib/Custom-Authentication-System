@@ -1,9 +1,20 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { AuthContext } from 'context/AuthProvider';
 
 const WelcomeSection = () => {
 
     const { user } = useContext(AuthContext)
+    const [loggedInUser, setLoggedInUser] = useState(null)
+
+    if (user) {
+        fetch(`http://localhost:5000/users/${user._id}`, {
+            headers: {
+                authorization: `bearer ${localStorage.getItem('custom-auth-token')}`
+            }
+        })
+            .then(res => res.json())
+            .then(data => setLoggedInUser(data))
+    }
 
     const welcomeGuest = {
         header: 'Custom Authentication & Authorization System',
@@ -11,7 +22,7 @@ const WelcomeSection = () => {
     }
 
     const welcomeUser = {
-        header: `Hey, ${user?.name}`,
+        header: `Hey, ${loggedInUser?.name}`,
         paragraph: 'We hope, you are enjoying our Custom Authentication & Authorization System.'
     }
 
