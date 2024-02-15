@@ -4,6 +4,7 @@ import FormControl from 'common-components/FormControl';
 import { ErrorAlert } from 'common-components/ErrorAlert';
 import SuccessAlert from 'common-components/SuccessAlert';
 import { AuthContext } from 'context/AuthProvider';
+import getUserToken from 'utilities/getUserToken';
 
 const Signup = () => {
 
@@ -47,9 +48,18 @@ const Signup = () => {
         })
             .then(res => res.json())
             .then(data => {
-                if (data.acknowledged) {
-                    setUser(user)
-                    setSuccess('User Created Successfully.')
+                if (data.user) {
+                    const user = data.user;
+                    const { email, name } = user;
+
+                    getUserToken(email)
+                        .then(res => res.json())
+                        .then(data => {
+                            const token = data.accessToken;;
+                            localStorage.setItem('custom-auth-token', token)
+                            setSuccess(`Hey ${name}, You are a member now.`)
+                            setUser(user)
+                        })
                 }
                 else if (data.error) {
                     setError(data.error)
