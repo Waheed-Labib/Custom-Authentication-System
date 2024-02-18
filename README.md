@@ -1,6 +1,6 @@
 Added :
 
-1. Signup with Wmail & Password
+1. Signup with Email & Password
 2. Login with Email & Password
 3. bcryptjs to hash password
 4. jwt to secure protected data
